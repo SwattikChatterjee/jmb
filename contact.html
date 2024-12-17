@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="contact.css">
+    <link rel="icon" type="image/x-icon" href="/Assets/Homepage/logo.png">
+    <title>Contact Us</title>
+    
+<body>
+    <header class="header">
+        <nav>
+          <div class="logo">
+            <a href="index.html"><img src="/Assets/Homepage/header image.png" alt="" width="500px"></a>
+          </div>
+          <input type="checkbox" id="menu-toggle">
+          <label for="menu-toggle" class="menu-icon">&#9776;</label>
+          <ul class="menu">
+            <li><a href="index.html"><b>Home</b></a></li>
+            <li><a href="about.html"><b>About Us</b></a></li>
+            <li><a href="products.html"><b>Products & Applications</b></a></li>
+            
+            <li><a href="contact.html"><b><u>Contact Us</u></b></a></li>
+          </ul>
+        </nav>
+      </header>
+    <div class="contact_us_6" style="background-image: url(/Assets/Contact/transport\ in\ dark\ mode\ with\ more\ black.png);">
+        <div class="responsive-container-block container">
+          <form class="Contact-form" id="Contact-form" onsubmit="main(e)">
+            <div class="container-block form-wrapper">
+              <div class="mob-text">
+                <p class="text-blk contactus-head">
+                  Get in Touch
+                </p>
+              </div>
+              <div class="responsive-container-block" id="i2cbk">
+                <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="i10mt-3">
+                  <p class="text-blk input-title">
+                    FULL NAME
+                  </p>
+                  <input class="input" id="name" name="name" placeholder="Please enter first name...">
+                </div>
+                <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="ip1yp">
+                  <p class="text-blk input-title">
+                    EMAIL
+                  </p>
+                  <input class="input" id="email" name="email" placeholder="Please enter email...">
+                </div>
+                <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="ih9wi">
+                  <p class="text-blk input-title">
+                    PHONE NUMBER
+                  </p>
+                  <input class="input" id="mob" name="mob" placeholder="Please enter phone number...">
+                </div>
+                <div class="responsive-cell-block wk-tab-12 wk-mobile-12 wk-desk-12 wk-ipadp-12" id="i634i-3">
+                  <p class="text-blk input-title">
+                    WHAT DO YOU HAVE IN MIND ?
+                  </p>
+                  <textarea class="textinput" id="txt" placeholder="Please enter query..."></textarea>
+                </div>
+              </div>
+              <button class="submit-btn" id="submit">
+                Submit
+              </button>
+            </div>
+          </form>
+          <div class="responsive-cell-block wk-desk-7 wk-ipadp-12 wk-tab-12 wk-mobile-12" id="i772w" style="background-color: wheat; border-radius: 15px;">
+            <div class="map-part">
+              <p class="text-blk map-contactus-head" style="padding-left:10px; padding-top: 10px;" id="w-c-s-fc_p-1-dm-id" >
+                Reach us at
+              </p>
+              <p class="text-blk map-contactus-subhead" style="color:rgb(7, 0, 148);padding-left: 15px;">
+                Manasadanga Gram, Sipta, P.O.- Badulia, Purba Bardhamman-712423<br> <b>Contact Details:</b>
+                <br>Ph no: +91 98302 52563
+            </p>
+              <div class="map-box container-block" style="border-radius: 0 0 15px 15px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="footer-container">
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><strong>Email:</strong> <a href="mailto:info@example.com">j.moitra@jmbiotech.com</a></p>
+                <p><strong>Phone:</strong> <a href="tel:+1234567890">+91 98302 52563</a></p>
+                <p><strong>Address:</strong> Manasadanga Gram, Sipta, P.O.- Badulia, Purba Bardhamman-712423</p>
+            </div>
+            
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; JM Biotech P LTD All rights reserved.</p>
+            <p>Designed & Developed <a href="https://earnnlearn.co.in">Earn N Learn Technologies</a></p>
+        </div>
+    </footer>
+</body>
+<script>
+document.getElementById('Contact-form').addEventListener('submit', main);
+
+function main(e) {
+    e.preventDefault(); // Prevent the default form submission
+
+    // Get values from the form
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const mob = document.getElementById('mob').value;
+    const txt = document.getElementById('txt').value;
+
+    // Log the values to the console
+    console.log("Name:", name);
+    console.log("Email:", email);
+    console.log("Phone Number:", mob);
+    console.log("Query:", txt);
+
+    // Send data to the server using fetch API
+    fetch('http://localhost:3000/submit-form', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, mob, txt }),
+    })
+        .then(response => {
+            if (response.ok) {
+                console.log('Data saved successfully!');
+                alert('Thank you for contacting us!');
+                document.getElementById('Contact-form').reset();
+            } else {
+                throw new Error('Failed to save data.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again later.');
+        });
+}
+
+
+</script>
+
+</html>
+
