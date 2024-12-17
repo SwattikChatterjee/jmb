@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mysql = require('mysql2');
 const cors = require('cors');
+const nodemailer = require('nodemailer');
 
 const app = express();
 const port = 3000;
@@ -10,36 +10,45 @@ const port = 3000;
 app.use(cors());
 app.use(bodyParser.json());
 
-// Database Connection
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'Swattika1',
-    database: 'contact_form_db',
-    ssl: {
-        rejectUnauthorized: false // Disable SSL verification
+// Create a transporter using your email service's SMTP credentials
+const transporter = nodemailer.createTransport({
+    service: 'gmail', // Change this to your email service (e.g., Gmail, Outlook)
+    auth: {
+        user: 'your_email@gmail.com', // Your email address
+        pass: 'your_email_password' // Your email password or app-specific password
     }
-});
-
-db.connect(err => {
-    if (err) {
-        console.error('Error connecting to MySQL Database:', err);
-        process.exit(1);
-    }
-    console.log('Connected to MySQL Database!');
 });
 
 // API Endpoint to Handle Form Submission
-app.post('/submit-form', (req, res) => {
-    const { name, email, mob, txt } = req.body;
-    const query = 'INSERT INTO contacts (name, email, mob, txt) VALUES (?, ?, ?, ?)';
-    db.query(query, [name, email, mob, txt], (err, result) => {
-        if (err) {
-            console.error(err);
-            res.status(500).send('Error saving data.');
-        } else {
-            res.status(200).send('Data saved successfully!');
+app.post('/send-email', (req, res) => {
+    const { name, email, subject, message } = req.body;
+
+    // Validate required fields
+    if (!name || !email || !subject || !message) {
+        return res.status(400).send('All fields are required.');
+    }
+
+    // Prepare email options
+    const mailOptions = {
+        from: 'your_email@gmail.com', // Sender's email address
+        to: 'YOUR_CLIENT_EMAIL', // Client's email address where data should be sent
+        subject: `New Message: ${subject}`,
+        text: `
+            Name: ${name}
+            Email: ${email}
+            Subject: ${subject}
+            Message: ${message}
+        `
+    };
+
+    // Send the email
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.log(error);
+            return res.status(500).send('Error sending email.');
         }
+        console.log('Email sent: ' + info.response);
+        res.status(200).json({ message: 'Form submitted and email sent successfully!' });
     });
 });
 
@@ -47,4 +56,3 @@ app.post('/submit-form', (req, res) => {
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
-         

@@ -134,20 +134,18 @@
    background-color: #444; /* Change background on hover for dropdown items */
  }
 
-.page-hero {
-   position: relative;
-   overflow: hidden;
-}
 
-.background-video-content {
+.hero {
    position: relative;
-   z-index: 1;
-}
-
-video[poster] {
-   object-fit: cover;
-   width: 100%;
-   height: 100%;
+   height: 87vh; /* Full viewport height */
+   background-image: url('/Assets/Homepage/hero_image.png'); /* Replace with your image */
+   background-size: cover; /* Cover the entire area */
+   background-position: center; /* Center the image */
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   color: white;
+   text-align: center;
 }
 
 .hero-content {

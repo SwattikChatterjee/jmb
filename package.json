@@ -5,7 +5,8 @@
     "express": "^4.21.1",
     "firebase": "^11.0.1",
     "mysql": "^2.18.1",
-    "mysql2": "^3.11.4"
+    "mysql2": "^3.11.4",
+    "nodemailer": "^6.9.16"
   },
   "name": "sdd",
   "version": "1.0.0",
